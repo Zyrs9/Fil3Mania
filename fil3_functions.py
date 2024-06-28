@@ -5,6 +5,32 @@ import random
 import string
 
 
+def corrupt_file(file_path, corruption_percentage=10):
+    # Read the original file data
+    with open(file_path, 'rb') as file:
+        data = bytearray(file.read())
+
+    total_bytes = len(data)
+    bytes_to_corrupt = int(total_bytes * corruption_percentage / 100)
+
+    # Randomly select byte positions to corrupt
+    for _ in range(bytes_to_corrupt):
+        byte_position = random.randint(0, total_bytes - 1)
+        data[byte_position] = random.randint(0, 255)
+
+    # Write the corrupted data back to the file
+    corrupted_file_path = file_path + '.corrupted'
+    with open(corrupted_file_path, 'wb') as corrupted_file:
+        corrupted_file.write(data)
+
+    return corrupted_file_path
+
+
+# Example usage
+file_path = 'path/to/your/file.ext'
+corrupt_file(file_path, 10)
+
+
 def generate_random_bytes_file():
     # Function to convert size to bytes
     def size_to_bytes(size, size_unit):
@@ -289,3 +315,55 @@ def compare_files(file_path1, file_path2):
     checksum1 = sha256_checksum(file_path1)
     checksum2 = sha256_checksum(file_path2)
     return checksum1 == checksum2
+
+
+"""
+EoF signatures will be added to files that have them for corrupt file gen and multiple file gens.
+Steganography for both files, executables and regular text planned to be added.
+
+"""
+eof_signatures = {
+    "ai": None,  # Adobe Illustrator - no fixed EOF signature
+    "psd": None,  # Adobe Photoshop - no fixed EOF signature
+    "dwg": None,  # AutoCAD - no fixed EOF signature
+    "mp3": None,  # Audio - no fixed EOF signature
+    "wav": None,  # Audio - no fixed EOF signature
+    "wma": None,  # Audio - no fixed EOF signature
+    "bak": None,  # Backup - no fixed EOF signature
+    "torrent": None,  # BitTorrent - no fixed EOF signature
+    "7z": None,  # Compressed - no fixed EOF signature
+    "tar.gz": None,  # Compressed - no fixed EOF signature
+    "rar": None,  # Compressed - no fixed EOF signature
+    "zip": None,  # Compressed - no fixed EOF signature
+    "iso": None,  # Disc image - no fixed EOF signature
+    "pdf": b'%EOF',  # Document
+    "exe": None,  # Executable - no fixed EOF signature
+    "otf": None,  # Font - no fixed EOF signature
+    "ttf": None,  # Font - no fixed EOF signature
+    "ico": None,  # Icon - no fixed EOF signature
+    "bmp": None,  # Image - no fixed EOF signature
+    "gif": b'\x00\x3B',  # Image
+    "jpeg": b'\xFF\xD9',  # Image
+    "jpg": b'\xFF\xD9',  # Image
+    "png": b'\x49\x45\x4E\x44\xAE\x42\x60\x82',  # Image
+    "svg": None,  # Image - no fixed EOF signature
+    "msi": None,  # Installer - no fixed EOF signature
+    "csv": None,  # Microsoft Excel - no fixed EOF signature
+    "xls": None,  # Microsoft Excel - no fixed EOF signature
+    "xlsx": None,  # Microsoft Excel - no fixed EOF signature
+    "pps": None,  # Microsoft PowerPoint - no fixed EOF signature
+    "ppt": None,  # Microsoft PowerPoint - no fixed EOF signature
+    "pptx": None,  # Microsoft PowerPoint - no fixed EOF signature
+    "doc": None,  # Microsoft Word - no fixed EOF signature
+    "docx": None,  # Microsoft Word - no fixed EOF signature
+    "mid": None,  # MIDI - no fixed EOF signature
+    "txt": None,  # Plain text - no fixed EOF signature
+    "tmp": None,  # Temporary - no fixed EOF signature
+    "vcr": None,  # VCard - no fixed EOF signature
+    "avi": None,  # Video - no fixed EOF signature
+    "mp4": None,  # Video - no fixed EOF signature
+    "mpg": None,  # Video - no fixed EOF signature
+    "wmv": None,  # Video - no fixed EOF signature
+    "xhtml": None,  # Web page - no fixed EOF signature
+    "html": None,  # Web page - no fixed EOF signature
+}

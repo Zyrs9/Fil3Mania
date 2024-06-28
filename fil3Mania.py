@@ -1,6 +1,4 @@
 import os
-import base64
-import hashlib
 import random
 
 from fil3_functions import generate_random_bytes_file
@@ -23,5 +21,6 @@ def corrupt_existing_file(file_path):
 
 
 
+for i in range(500):
+    corrupt_existing_file("lic.pdf")
 
-generate_random_bytes_file()
