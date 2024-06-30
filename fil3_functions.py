@@ -3,6 +3,8 @@ import hashlib
 import os
 import random
 import string
+import numpy as np
+from PIL import Image
 
 
 def corrupt_file(file_path, corruption_percentage=10):
@@ -27,8 +29,8 @@ def corrupt_file(file_path, corruption_percentage=10):
 
 
 # Example usage
-file_path = 'path/to/your/file.ext'
-corrupt_file(file_path, 10)
+# file_path = 'path/to/your/file.ext'
+# corrupt_file(file_path, 10)
 
 
 def generate_random_bytes_file():
@@ -122,8 +124,8 @@ def generate_multiple_random_files():
         return ''.join(random.choices(string.ascii_letters + string.digits, k=length)) + extension
 
     # Function to generate numbered filename
-    def generate_numbered_filename(base, i, digits, extension):
-        return f"{base}{str(i).zfill(digits)}{extension}"
+    def generate_numbered_filename(base, characters, digits_fill, extension):
+        return f"{base}{str(characters).zfill(digits_fill)}{extension}"
 
     # User input for number of files
     num_files = int(input("Enter the number of files to create: "))
@@ -163,7 +165,6 @@ def generate_multiple_random_files():
             with open(filename, 'wb') as file:
                 file.write(os.urandom(size_in_bytes))
             print(f"File '{filename}' created with {size_in_bytes} bytes of random data.")
-
     elif pattern_choice == 2:
         numbering_options = ["0, 1, ...", "00, 01, ...", "1, 2, ...", "01, 02, ..."]
         for i, option in enumerate(numbering_options):
@@ -204,7 +205,6 @@ def generate_multiple_random_files():
             with open(filename, 'wb') as file:
                 file.write(os.urandom(size_in_bytes))
             print(f"File '{filename}' created with {size_in_bytes} bytes of random data.")
-
     elif pattern_choice == 3:
         custom_pattern = input("Enter the custom filename pattern (use '%' for numbering): ")
         numbering_options = ["0, 1, ...", "00, 01, ...", "1, 2, ...", "01, 02, ..."]
@@ -246,7 +246,6 @@ def generate_multiple_random_files():
             with open(filename, 'wb') as file:
                 file.write(os.urandom(size_in_bytes))
             print(f"File '{filename}' created with {size_in_bytes} bytes of random data.")
-
     else:
         print("Invalid choice.")
 
@@ -315,6 +314,147 @@ def compare_files(file_path1, file_path2):
     checksum1 = sha256_checksum(file_path1)
     checksum2 = sha256_checksum(file_path2)
     return checksum1 == checksum2
+
+
+def hide_text_in_image(image_path, text, output_path):
+    # Open the image
+    image = Image.open(image_path)
+    image_data = np.array(image)
+
+    # Convert text to binary
+    binary_text = ''.join(format(ord(char), '08b') for char in text)
+    binary_text += '1111111111111110'  # End of text marker
+
+    # Embed the binary text into the image
+    data_index = 0
+    for row in range(image_data.shape[0]):
+        for col in range(image_data.shape[1]):
+            for color in range(image_data.shape[2]):
+                if data_index < len(binary_text):
+                    image_data[row, col, color] = (image_data[row, col, color] & 0xFE) | int(binary_text[data_index])
+                    data_index += 1
+
+    # Save the modified image
+    result_image = Image.fromarray(image_data)
+    result_image.save(output_path)
+    return output_path
+
+
+def reveal_text_in_image(image_path):
+    # Open the image
+    image = Image.open(image_path)
+    image_data = np.array(image)
+
+    binary_text = ""
+    for row in range(image_data.shape[0]):
+        for col in range(image_data.shape[1]):
+            for color in range(image_data.shape[2]):
+                binary_text += str(image_data[row, col, color] & 1)
+
+    # Split the binary text into 8-bit chunks and convert to characters
+    chars = [chr(int(binary_text[i:i + 8], 2)) for i in range(0, len(binary_text), 8)]
+    text = ''.join(chars)
+
+    # Find the end of text marker and return the text
+    end_marker_index = text.find(chr(255) + chr(254))
+    if end_marker_index != -1:
+        text = text[:end_marker_index]
+
+    return text
+
+
+def hide_image_in_image(cover_image_path, secret_image_path, output_path):
+    # Open the cover image and the secret image
+    cover_image = Image.open(cover_image_path)
+    secret_image = Image.open(secret_image_path).resize(cover_image.size)
+
+    cover_image_data = np.array(cover_image)
+    secret_image_data = np.array(secret_image)
+
+    # Convert the secret image to binary
+    secret_image_binary = ''.join(format(pixel, '08b') for pixel in secret_image_data.flatten())
+
+    # Embed the binary secret image into the cover image
+    data_index = 0
+    for row in range(cover_image_data.shape[0]):
+        for col in range(cover_image_data.shape[1]):
+            for color in range(cover_image_data.shape[2]):
+                if data_index < len(secret_image_binary):
+                    cover_image_data[row, col, color] = (cover_image_data[row, col, color] & 0xFE) | int(
+                        secret_image_binary[data_index])
+                    data_index += 1
+
+    # Save the modified image
+    result_image = Image.fromarray(cover_image_data)
+    result_image.save(output_path)
+    return output_path
+
+
+def reveal_image_in_image(image_path, output_path):
+    # Open the image
+    image = Image.open(image_path)
+    image_data = np.array(image)
+
+    binary_secret_image = ""
+    for row in range(image_data.shape[0]):
+        for col in range(image_data.shape[1]):
+            for color in range(image_data.shape[2]):
+                binary_secret_image += str(image_data[row, col, color] & 1)
+
+    # Convert the binary data to an image
+    secret_image_data = [int(binary_secret_image[i:i + 8], 2) for i in range(0, len(binary_secret_image), 8)]
+    secret_image_data = np.array(secret_image_data).reshape(image_data.shape).astype(np.uint8)
+
+    # Save the secret image
+    secret_image = Image.fromarray(secret_image_data)
+    secret_image.save(output_path)
+    return output_path
+
+
+def hide_data_in_image(image_path, data, output_path):
+    # Open the image
+    image = Image.open(image_path)
+    image_data = np.array(image)
+
+    # Convert data to binary
+    binary_data = ''.join(format(byte, '08b') for byte in data)
+    binary_data += '1111111111111110'  # End of data marker
+
+    # Embed the binary data into the image
+    data_index = 0
+    for row in range(image_data.shape[0]):
+        for col in range(image_data.shape[1]):
+            for color in range(image_data.shape[2]):
+                if data_index < len(binary_data):
+                    image_data[row, col, color] = (image_data[row, col, color] & 0xFE) | int(binary_data[data_index])
+                    data_index += 1
+
+    # Save the modified image
+    result_image = Image.fromarray(image_data)
+    result_image.save(output_path)
+    return output_path
+
+
+def reveal_data_in_image(image_path):
+    # Open the image
+    image = Image.open(image_path)
+    image_data = np.array(image)
+
+    binary_data = ""
+    for row in range(image_data.shape[0]):
+        for col in range(image_data.shape[1]):
+            for color in range(image_data.shape[2]):
+                binary_data += str(image_data[row, col, color] & 1)
+
+    # Split the binary data into 8-bit chunks and convert to bytes
+    data = bytes([int(binary_data[i:i + 8], 2) for i in range(0, len(binary_data), 8)])
+
+    # Find the end of data marker and return the data
+    end_marker_index = data.find(b'\xff\xfe')
+    if end_marker_index != -1:
+        data = data[:end_marker_index]
+
+    return data
 
 
 """
