@@ -14,7 +14,7 @@ This project provides a set of tools for manipulating files and performing stega
 - Hide one image within another.
 
 ## Requirements
-- Python 3.x
+- Python > 3.10.x
 - `numpy`
 - `Pillow`
 
