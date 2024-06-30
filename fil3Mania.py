@@ -13,28 +13,31 @@ from fil3_functions import (
     hide_image_in_image,
     reveal_image_in_image,
     hide_data_in_image,
-    reveal_data_in_image
+    reveal_data_in_image,
+    file_sort1
 )
 
 
 def show_menu() -> None:
-    print("Select a function to see its example usage:")
-    print("1. corrupt_file")
-    print("2. generate_random_bytes_file")
-    print("3. generate_multiple_random_files")
-    print("4. split_file")
-    print("5. join_files")
-    print("6. base64_encode")
-    print("7. base64_decode")
-    print("8. sha256_checksum")
-    print("9. compare_files")
-    print("10. hide_text_in_image")
-    print("11. reveal_text_in_image")
-    print("12. hide_image_in_image")
-    print("13. reveal_image_in_image")
-    print("14. hide_data_in_image")
-    print("15. reveal_data_in_image")
-    print("0. Exit")
+    print("Select a function to see its example usage:\n"
+          "1. corrupt_file\n"
+          "2. generate_random_bytes_file\n"
+          "3. generate_multiple_random_files\n"
+          "4. split_file\n"
+          "5. join_files\n"
+          "6. base64_encode\n"
+          "7. base64_decode\n"
+          "8. sha256_checksum\n"
+          "9. compare_files\n"
+          "10. hide_text_in_image\n"
+          "11. reveal_text_in_image\n"
+          "12. hide_image_in_image\n"
+          "13. reveal_image_in_image\n"
+          "14. hide_data_in_image\n"
+          "15. reveal_data_in_image\n"
+          "16. file_sort1\n"
+          "0. Exit"
+          )
 
 
 def main() -> None:
@@ -99,6 +102,9 @@ def main() -> None:
             case 15:
                 image_path = input("Enter the image path: ")
                 print(f"Revealed data: {reveal_data_in_image(image_path)}")
+            case 16:
+                usr_input: str = input("Enter the path for the directory")
+                file_sort1(usr_input)
             case _:
                 print("Invalid choice. Please try again.")
 

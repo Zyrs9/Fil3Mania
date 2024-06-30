@@ -33,10 +33,10 @@ This toolkit is menu-driven. Run the script and follow the prompts to use the va
 python fil3Mania.py
 ```
 
-```python 
-##Menu Options
 
-0  Exit: Exits the menu.
+## Menu Options
+````
+0   Exit: Exits the menu.
 1   corrupt_file: Corrupts a file by a specified percentage.
 2   generate_random_bytes_file: Generates a file with random bytes.
 3   generate_multiple_random_files: Generates multiple files with random bytes.
@@ -52,4 +52,5 @@ python fil3Mania.py
 13  reveal_image_in_image: Reveals a hidden image within another image.
 14  hide_data_in_image: Hides binary data within an image.
 15  reveal_data_in_image: Reveals hidden binary data within an image.
-```
+16  file_sort1: Sorts the files and documents in the dir by their extensions into sub_dirs.
+````

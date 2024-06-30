@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23d7e852-6d8a-4af4-9b0b-74927c7404ad" name="Changes" comment="Added fil3Mania.py menu options and first testability for the functions. Implemented the new stego function parts.">
+    <list default="true" id="23d7e852-6d8a-4af4-9b0b-74927c7404ad" name="Changes" comment="Type hinting for functions are added and match-case statements are used instead of elif statements.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fil3Mania.py" beforeDir="false" afterPath="$PROJECT_DIR$/fil3Mania.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fil3_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/fil3_functions.py" afterDir="false" />
     </list>
@@ -24,6 +25,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/fil3_functions.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -39,21 +43,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.fil3Mania.executor": "Run",
-    "Python.fil3_functions.executor": "Run",
-    "Python.fileManiac.executor": "Run",
-    "Python.func3.executor": "Run",
-    "Python.test1.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/M/Desktop/Tkinter-Designer-master",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.fil3Mania.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fil3_functions.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fileManiac.executor&quot;: &quot;Run&quot;,
+    &quot;Python.func3.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test1.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/M/Desktop/Tkinter-Designer-master&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\M\PycharmProjects\fileOps" />
@@ -99,7 +103,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719750336640</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Type hinting for functions are added and match-case statements are used instead of elif statements.">
+      <option name="closed" value="true" />
+      <created>1719755064665</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719755064665</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -117,6 +129,7 @@
     <MESSAGE value="Created classes for to-be fileMania standalone and file ops" />
     <MESSAGE value="new function for file corruption, a dictionary of some possible eof bytes are added" />
     <MESSAGE value="Added fil3Mania.py menu options and first testability for the functions. Implemented the new stego function parts." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added fil3Mania.py menu options and first testability for the functions. Implemented the new stego function parts." />
+    <MESSAGE value="Type hinting for functions are added and match-case statements are used instead of elif statements." />
+    <option name="LAST_COMMIT_MESSAGE" value="Type hinting for functions are added and match-case statements are used instead of elif statements." />
   </component>
 </project>
